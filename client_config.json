@@ -3,6 +3,9 @@
           "alterId": 64
         }
       ]
+    },
+    "streamSetting":{
+      "network":"ws"
     }
   },
   "inboundDetour": [
