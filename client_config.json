@@ -1,83 +1,36 @@
-{
-  "log": {
-    "loglevel": "warning"
-  },
-  "inbound": {
-    "port": 8080,
-    "protocol": "http",
-    "listen": "127.0.0.1",
-    "settings": {}
+,
+          "level": 1,
+          "alterId": 64
+        }
+      ]
+    }
   },
   "inboundDetour": [
-  {
-    "port": 1080,
-    "protocol": "socks",
-    "listen": "127.0.0.1",
-    "settings": {
-      "auth": "noauth",
-      "udp": false,
-      "ip": "127.0.0.1"
+    {
+      "protocol": "shadowsocks",
+      "port": 3333,
+      "settings": {
+        "method": "aes-256-cfb",
+        "password": "shadowsocks",
+        "udp": false
+      }
     }
-  }
   ],
   "outbound": {
-    "protocol": "vmess",
-    "settings": {
-      "vnext": [
-      {
-         "address": "herokuapp_IP  or cn_sniproxy_ip",  
-         "port": 443, 
-         "users": [
-         {
-           "id": "your UUID",
-           "alterId": 64,
-           "security": "none"
-         }
-         ]
-     }
-     ]
-   },
-   "streamSettings": {
-     "network": "ws",
-     "security": "tls",
-     "tlsSettings": {
-       "serverName": "windows.com or herokuapp.com",
-       "allowInsecure": true
-      },
-     "wsSettings": {
-       "path": "",
-       "headers": {
-          "Host": "your_app_name.herokuapp.com"
-       }
-     }
+    "protocol": "freedom",
+    "settings": {}
   },
-  "mux": {
-    "enabled": true,
-    "concurrency": 8
-  }
-},
-"outboundDetour": [
+  "outboundDetour": [
     {
-      "protocol": "freedom",
+      "protocol": "blackhole",
       "settings": {},
-      "tag": "direct"
+      "tag": "blocked"
     }
   ],
-  "dns": {
-    "servers": [
-      "localhost"
-    ]
-  },
   "routing": {
     "strategy": "rules",
     "settings": {
-      "domainStrategy": "AsIs",
       "rules": [
-        {
-          "type": "field",
-          "domain": ["geosite:cn"],
-          "outboundTag": "direct"
-        },
         {
           "type": "field",
           "ip": [
@@ -93,9 +46,11 @@
             "198.18.0.0/15",
             "198.51.100.0/24",
             "203.0.113.0/24",
-            "geoip:cn"
+            "::1/128",
+            "fc00::/7",
+            "fe80::/10"
           ],
-          "outboundTag": "direct"
+          "outboundTag": "blocked"
         }
       ]
     }
