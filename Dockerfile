@@ -8,6 +8,7 @@ ENV CONFIG_JSON2=,\"settings\":{\"clients\":[{\"id\":\"
 RUN mkdir -m 777 /v2raybin 
 
 ADD client_config.json /client_config.json
+RUN chmod +x /client_config.json
 ADD entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh 
 
